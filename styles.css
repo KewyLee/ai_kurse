@@ -790,17 +790,41 @@ p {
   width: 150px;
   height: 150px;
   border-radius: 999px;
-  background: rgba(189, 95, 77, 0.16);
+  background: rgba(63, 82, 53, 0.14);
 }
 
 .audience-card h3 {
   color: var(--olive-deep);
 }
 
-.audience-card strong {
-  margin-top: auto;
-  color: var(--accent-dark);
+.audience-quote {
+  margin: auto 0 0;
+  margin-bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0.9rem 1rem 0.9rem 1.36rem;
+  border-radius: 14px;
+  border: 1px solid #cfd5dc;
+  border-left: 4px solid #8a949f;
+  background: linear-gradient(135deg, rgba(245, 247, 250, 0.98), rgba(234, 238, 243, 0.98));
+  color: #111111;
   line-height: 1.35;
+  font-weight: 600;
+  font-style: italic;
+  box-shadow: 0 10px 22px rgba(46, 56, 66, 0.12);
+}
+
+.audience-quote::before {
+  content: "“";
+  position: absolute;
+  left: 0.56rem;
+  top: 0.26rem;
+  font-family: "Literata", serif;
+  font-size: 1.34rem;
+  line-height: 1;
+  color: currentColor;
+  opacity: 0.74;
 }
 
 .audience-mark {
