@@ -101,7 +101,7 @@
             (m[i].a = m[i].a || []).push(arguments);
           };
         m[i].l = 1 * new Date();
-        for (let j = 0; j < document.scripts.length; j++) {
+        for (var j = 0; j < document.scripts.length; j++) {
           if (document.scripts[j].src === r) {
             return;
           }
@@ -127,11 +127,7 @@
     <!-- /Yandex.Metrika counter -->
   </head>
   <body>
-    <noscript>
-      <div>
-        <img src="https://mc.yandex.ru/watch/109420811" style="position: absolute; left: -9999px" alt="" />
-      </div>
-    </noscript>
+    <noscript><div><img src="https://mc.yandex.ru/watch/109420811" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <div class="welcome-overlay" id="welcome-overlay" aria-hidden="true">
       <p class="welcome-title">Добро пожаловать, Богиня!</p>
       <span class="welcome-arrow" aria-hidden="true"></span>
