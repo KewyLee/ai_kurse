@@ -21,16 +21,9 @@
 2. При наличии webhook укажи URL:
 `const TELEGRAM_WEBHOOK_URL = "";`
 
-## Сервер и доступ
-- IP: `31.59.114.249`
-- User: `dev`
-- SSH key: стандартный ключ OpenSSH на локальной машине (обычно
-`~/.ssh/id_rsa` или `~/.ssh/id_ed25519`)
+## Деплой
+Локальный скрипт деплоя: `deploy.local.ps1` (он исключён из Git).
 
-## Обновление проекта на сервере
-1. Подключение:
-`ssh dev@31.59.114.249`
-2. Перейти в директорию проекта:
-`cd /home/dev/ai_kurse`
-3. Обновить код:
-`git pull`
+Примеры запуска:
+- `.\deploy.local.ps1 -Message "feat: update landing"`
+- `.\deploy.local.ps1 -SkipServer` (только commit/push в GitHub)
