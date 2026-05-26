@@ -18,6 +18,8 @@ const countrySearchInput = document.getElementById("country-search");
 const countryOptions = document.getElementById("country-options");
 const countryEmptyState = document.getElementById("country-empty");
 const POPULAR_COUNTRY_ISO = ["UA", "KZ", "GE"];
+const YM_COUNTER_ID = 109420811;
+const CTA_GOAL_SELECTOR = '[data-ym-goal="cta_click"], a[href="#cta"]';
 const TIMEZONE_TO_COUNTRY_ISO = {
   "Europe/Kyiv": "UA",
   "Europe/Kiev": "UA",
@@ -97,6 +99,138 @@ const COUNTRY_PHONE_DATA = [
   { iso: "ZA", name: "ЮАР", flag: "🇿🇦", dialCode: "+27", minLength: 9, maxLength: 9 },
   { iso: "JP", name: "Япония", flag: "🇯🇵", dialCode: "+81", minLength: 9, maxLength: 10 },
 ];
+let hasTrackedFormStart = false;
+let hasTrackedFormVisibility = false;
+let isLeadSubmitted = false;
+
+function sendYmGoal(goalName) {
+  if (
+    goalName &&
+    typeof window !== "undefined" &&
+    typeof window.ym === "function"
+  ) {
+    window.ym(YM_COUNTER_ID, "reachGoal", goalName);
+  }
+}
+
+function isTelegramHref(href) {
+  return /^(https?:\/\/(t\.me|telegram\.me)\/|tg:\/\/)/i.test(href);
+}
+
+function handleCtaGoalClick(event) {
+  const target = event.target;
+  if (!(target instanceof Element)) {
+    return;
+  }
+
+  if (target.closest(CTA_GOAL_SELECTOR)) {
+    sendYmGoal("cta_click");
+  }
+}
+
+function handleTelegramGoalClick(event) {
+  const target = event.target;
+  if (!(target instanceof Element)) {
+    return;
+  }
+
+  const link = target.closest("a[href]");
+  if (!link) {
+    return;
+  }
+
+  const href = String(link.getAttribute("href") || "").trim();
+  if (!isTelegramHref(href)) {
+    return;
+  }
+
+  if (link.id === "telegram-link" && isLeadSubmitted) {
+    sendYmGoal("telegram_after_submit");
+  }
+
+  sendYmGoal("telegram_click");
+}
+
+function isTrackableFormControl(element) {
+  return element.matches("input:not([type='hidden']), select, textarea, button");
+}
+
+function initFormStartTracking() {
+  if (!form) {
+    return;
+  }
+
+  const trackFormStart = (event) => {
+    if (hasTrackedFormStart) {
+      return;
+    }
+
+    const target = event.target;
+    if (!(target instanceof Element) || !isTrackableFormControl(target)) {
+      return;
+    }
+
+    hasTrackedFormStart = true;
+    sendYmGoal("form_start");
+
+    form.removeEventListener("focus", trackFormStart, true);
+    form.removeEventListener("input", trackFormStart);
+    form.removeEventListener("click", trackFormStart);
+  };
+
+  form.addEventListener("focus", trackFormStart, true);
+  form.addEventListener("input", trackFormStart);
+  form.addEventListener("click", trackFormStart);
+}
+
+function initFormVisibilityTracking() {
+  if (!form || hasTrackedFormVisibility) {
+    return;
+  }
+
+  const trackVisibility = () => {
+    if (hasTrackedFormVisibility) {
+      return;
+    }
+
+    hasTrackedFormVisibility = true;
+    sendYmGoal("scroll_to_form");
+  };
+
+  if (typeof IntersectionObserver !== "function") {
+    const checkVisibility = () => {
+      if (hasTrackedFormVisibility) {
+        return;
+      }
+
+      const rect = form.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        trackVisibility();
+        window.removeEventListener("scroll", checkVisibility);
+        window.removeEventListener("resize", checkVisibility);
+      }
+    };
+
+    checkVisibility();
+    window.addEventListener("scroll", checkVisibility, { passive: true });
+    window.addEventListener("resize", checkVisibility);
+    return;
+  }
+
+  const formVisibilityObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          trackVisibility();
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0 }
+  );
+
+  formVisibilityObserver.observe(form);
+}
 
 function getTodayKey() {
   return new Date().toISOString().slice(0, 10);
@@ -462,6 +596,11 @@ function initCountryPicker() {
 }
 
 initCountryPicker();
+initFormStartTracking();
+initFormVisibilityTracking();
+
+document.addEventListener("click", handleCtaGoalClick);
+document.addEventListener("click", handleTelegramGoalClick);
 
 function findCountryByIso(iso) {
   return COUNTRY_PHONE_DATA.find((country) => country.iso === iso) || null;
@@ -541,6 +680,9 @@ form.addEventListener("submit", async (event) => {
     setError("Проблема с отправкой. Попробуй ещё раз через минуту.");
     return;
   }
+
+  isLeadSubmitted = true;
+  sendYmGoal("lead_submit");
 
   const text = encodeURIComponent(
     `Привет, я ${name}, хочу узнать про обучение. Моя роль: ${role}. Telegram: ${telegram}, телефон: ${phoneValidation.internationalPhone} (${phoneCountry.name})`
