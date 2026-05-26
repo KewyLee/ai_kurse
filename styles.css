@@ -951,6 +951,37 @@ p {
   font-weight: 800;
 }
 
+.label-with-help {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.help-link {
+  width: 1.22rem;
+  height: 1.22rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.help-link:hover,
+.help-link:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.9);
+  outline: none;
+}
+
 .lead-form input,
 .lead-form select {
   width: 100%;
@@ -966,6 +997,169 @@ p {
 .lead-form select:focus {
   border-color: var(--blush);
   outline: 3px solid rgba(242, 199, 184, 0.34);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.phone-group {
+  position: relative;
+  display: grid;
+  grid-template-columns: 122px minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: stretch;
+}
+
+.country-toggle {
+  width: 100%;
+  padding: 0.78rem 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--text);
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  cursor: pointer;
+}
+
+.country-toggle:focus-visible,
+.country-toggle.is-open {
+  border-color: var(--blush);
+  outline: 3px solid rgba(242, 199, 184, 0.34);
+}
+
+.country-toggle-arrow {
+  width: 0.56rem;
+  height: 0.56rem;
+  border-right: 2px solid rgba(37, 51, 31, 0.66);
+  border-bottom: 2px solid rgba(37, 51, 31, 0.66);
+  transform: rotate(45deg) translateY(-1px);
+  transition: transform 0.22s ease;
+  flex-shrink: 0;
+}
+
+.country-toggle.is-open .country-toggle-arrow {
+  transform: rotate(-135deg) translateY(-1px);
+}
+
+.phone-group #phone {
+  min-width: 0;
+}
+
+.country-dropdown {
+  position: absolute;
+  z-index: 25;
+  top: calc(100% + 0.45rem);
+  left: 0;
+  width: min(360px, 100%);
+  padding: 0.52rem;
+  border-radius: 12px;
+  border: 1px solid rgba(63, 82, 53, 0.26);
+  background: #fff;
+  box-shadow: 0 20px 34px rgba(0, 0, 0, 0.2);
+}
+
+#country-search {
+  color: var(--text);
+  border-color: rgba(63, 82, 53, 0.18);
+}
+
+#country-search:focus {
+  border-color: var(--sage);
+  outline-color: rgba(159, 181, 142, 0.34);
+}
+
+.country-options {
+  margin: 0.52rem 0 0;
+  padding: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.country-option {
+  width: 100%;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.52rem 0.56rem;
+  text-align: left;
+}
+
+.country-option:hover,
+.country-option:focus-visible {
+  background: rgba(159, 181, 142, 0.16);
+  outline: none;
+}
+
+.country-option.is-selected {
+  background: rgba(159, 181, 142, 0.24);
+}
+
+.country-option.is-popular {
+  border: 1px solid rgba(189, 95, 77, 0.36);
+}
+
+.country-option-name {
+  font-weight: 700;
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.country-option-code {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.country-option-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.38rem;
+  border-radius: 999px;
+  background: rgba(189, 95, 77, 0.14);
+  color: var(--accent-dark);
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.country-empty {
+  margin: 0.7rem 0 0.25rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.phone-hint {
+  margin: 0.2rem 0 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.84rem;
 }
 
 .form-note {
@@ -1235,6 +1429,14 @@ p {
   .cta-box {
     padding: 1.4rem;
     border-radius: 20px;
+  }
+
+  .phone-group {
+    grid-template-columns: 102px minmax(0, 1fr);
+  }
+
+  .country-dropdown {
+    width: min(320px, 100%);
   }
 
   .footer .container {
