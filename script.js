@@ -1,11 +1,14 @@
-const TELEGRAM_USERNAME = "your_username";
-const TELEGRAM_WEBHOOK_URL = "";
+const PUBLIC_CONFIG_ENDPOINT = "/api/public-config";
+const LEAD_SUBMIT_ENDPOINT = "/api/lead";
+let telegramPersonalUsername = "your_username";
+let telegramChannelUrl = "https://t.me/your_channel";
 
 const form = document.getElementById("lead-form");
 const errorEl = document.getElementById("form-error");
 const successModal = document.getElementById("success-modal");
 const closeSuccessBtn = document.getElementById("close-success");
 const telegramLink = document.getElementById("telegram-link");
+const footerTelegramLink = document.getElementById("footer-telegram-link");
 const welcomeOverlay = document.getElementById("welcome-overlay");
 const WELCOME_STORAGE_KEY = "ai-blog-welcome-date";
 const phoneGroup = document.getElementById("phone-group");
@@ -617,17 +620,55 @@ function closeSuccessModal() {
 }
 
 async function sendLead(payload) {
-  if (!TELEGRAM_WEBHOOK_URL) {
-    return true;
-  }
-
-  const response = await fetch(TELEGRAM_WEBHOOK_URL, {
+  const response = await fetch(LEAD_SUBMIT_ENDPOINT, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 
   return response.ok;
+}
+
+function applyTelegramLinks() {
+  const personalLink = `https://t.me/${telegramPersonalUsername}`;
+
+  if (telegramLink && !isLeadSubmitted) {
+    telegramLink.href = personalLink;
+  }
+
+  if (footerTelegramLink) {
+    footerTelegramLink.href = telegramChannelUrl || personalLink;
+  }
+}
+
+async function loadPublicConfig() {
+  try {
+    const response = await fetch(PUBLIC_CONFIG_ENDPOINT, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      return;
+    }
+
+    const payload = await response.json();
+    const nextTelegramPersonalUsername = String(payload.telegramPersonalUsername || "")
+      .trim()
+      .replace(/^@/, "");
+    const nextTelegramChannelUrl = String(payload.telegramChannelUrl || "").trim();
+
+    if (nextTelegramPersonalUsername) {
+      telegramPersonalUsername = nextTelegramPersonalUsername;
+    }
+
+    if (nextTelegramChannelUrl) {
+      telegramChannelUrl = nextTelegramChannelUrl;
+    }
+
+    applyTelegramLinks();
+  } catch (_error) {
+    // noop
+  }
 }
 
 form.addEventListener("submit", async (event) => {
@@ -669,25 +710,25 @@ form.addEventListener("submit", async (event) => {
     source: "landing-ai-blog",
     createdAt: new Date().toISOString(),
   };
+  const telegramText = encodeURIComponent(
+    `Привет, я ${name}, хочу узнать про обучение. Моя роль: ${role}. Telegram: ${telegram}, телефон: ${phoneValidation.internationalPhone} (${phoneCountry.name})`
+  );
 
   try {
     const isDelivered = await sendLead(payload);
     if (!isDelivered) {
-      setError("Не удалось отправить заявку. Попробуй ещё раз.");
+      setError("Не удалось отправить заявку в группу. Попробуй ещё раз.");
       return;
     }
   } catch (_error) {
-    setError("Проблема с отправкой. Попробуй ещё раз через минуту.");
+    setError("Проблема с отправкой заявки в группу. Попробуй ещё раз через минуту.");
     return;
   }
 
   isLeadSubmitted = true;
   sendYmGoal("lead_submit");
 
-  const text = encodeURIComponent(
-    `Привет, я ${name}, хочу узнать про обучение. Моя роль: ${role}. Telegram: ${telegram}, телефон: ${phoneValidation.internationalPhone} (${phoneCountry.name})`
-  );
-  telegramLink.href = `https://t.me/${TELEGRAM_USERNAME}?text=${text}`;
+  telegramLink.href = `https://t.me/${telegramPersonalUsername}?text=${telegramText}`;
   openSuccessModal();
   form.reset();
   setCountrySelection(detectCountryFromClientContext());
@@ -754,3 +795,5 @@ function syncThoughtBubbles() {
 window.addEventListener("scroll", syncThoughtBubbles, { passive: true });
 window.addEventListener("resize", syncThoughtBubbles);
 syncThoughtBubbles();
+applyTelegramLinks();
+loadPublicConfig();

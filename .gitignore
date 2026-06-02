@@ -1,1 +1,3 @@
 deploy.local.ps1
+.env
+node_modules
