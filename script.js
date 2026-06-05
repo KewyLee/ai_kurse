@@ -259,6 +259,8 @@ function showWelcomeOncePerDay() {
     return;
   }
 
+  window.scrollTo({ top: 0, behavior: "instant" });
+
   if (localStorage.getItem(WELCOME_STORAGE_KEY) === getTodayKey()) {
     return;
   }
@@ -269,7 +271,7 @@ function showWelcomeOncePerDay() {
 
   window.setTimeout(hideWelcome, 2600);
   window.addEventListener("wheel", hideWelcome, { once: true, passive: true });
-  window.addEventListener("touchmove", hideWelcome, { once: true, passive: true });
+  window.addEventListener("touchend", hideWelcome, { once: true, passive: true });
   window.addEventListener("keydown", hideWelcome, { once: true });
   welcomeOverlay.addEventListener("click", hideWelcome, { once: true });
 }
