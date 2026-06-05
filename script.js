@@ -239,6 +239,16 @@ function getTodayKey() {
   return new Date().toISOString().slice(0, 10);
 }
 
+function blockScroll(e) {
+  e.preventDefault();
+}
+
+function unlockScroll() {
+  document.removeEventListener("wheel", blockScroll);
+  document.removeEventListener("touchmove", blockScroll);
+  document.body.classList.remove("welcome-active");
+}
+
 function hideWelcome() {
   if (!welcomeOverlay || !welcomeOverlay.classList.contains("is-visible")) {
     return;
@@ -250,7 +260,7 @@ function hideWelcome() {
   window.setTimeout(() => {
     welcomeOverlay.classList.remove("is-visible", "is-hiding");
     welcomeOverlay.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("welcome-active");
+    unlockScroll();
   }, 1150);
 }
 
@@ -259,19 +269,19 @@ function showWelcomeOncePerDay() {
     return;
   }
 
-  window.scrollTo({ top: 0, behavior: "instant" });
-
   if (localStorage.getItem(WELCOME_STORAGE_KEY) === getTodayKey()) {
     return;
   }
+
+  window.scrollTo({ top: 0, behavior: "instant" });
+  document.addEventListener("wheel", blockScroll, { passive: false });
+  document.addEventListener("touchmove", blockScroll, { passive: false });
 
   document.body.classList.add("welcome-active");
   welcomeOverlay.setAttribute("aria-hidden", "false");
   welcomeOverlay.classList.add("is-visible");
 
   window.setTimeout(hideWelcome, 2600);
-  window.addEventListener("wheel", hideWelcome, { once: true, passive: true });
-  window.addEventListener("touchend", hideWelcome, { once: true, passive: true });
   window.addEventListener("keydown", hideWelcome, { once: true });
   welcomeOverlay.addEventListener("click", hideWelcome, { once: true });
 }
