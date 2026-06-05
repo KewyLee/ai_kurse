@@ -1299,6 +1299,243 @@ p {
   background: rgba(220, 233, 232, 0.65);
 }
 
+/* ── Course Program ─────────────────────────────────────── */
+
+.program-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(189, 95, 77, 0.12);
+  color: var(--accent-dark);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.program-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: var(--olive-deep);
+  margin-bottom: 1rem;
+}
+
+.program-subtitle {
+  max-width: 720px;
+  font-size: clamp(1rem, 2vw, 1.14rem);
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 2.4rem;
+}
+
+.program-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 2.8rem;
+}
+
+.program-stat {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(63, 82, 53, 0.16);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.1rem;
+  box-shadow: var(--shadow);
+}
+
+.program-stat strong {
+  display: block;
+  font-family: "Literata", serif;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.program-stat span {
+  font-size: 0.88rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.program-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.program-module {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(63, 82, 53, 0.16);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.program-module:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 44px rgba(37, 51, 31, 0.16);
+}
+
+.program-module summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 1.5rem 1.75rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.2rem;
+  align-items: center;
+  user-select: none;
+}
+
+.program-module summary::-webkit-details-marker {
+  display: none;
+}
+
+.module-number {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: rgba(189, 95, 77, 0.1);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Literata", serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.module-head h3 {
+  margin: 0 0 0.45rem;
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  line-height: 1.15;
+  color: var(--olive-deep);
+  letter-spacing: -0.02em;
+}
+
+.module-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.module-pill {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(63, 82, 53, 0.09);
+  color: var(--olive);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.module-arrow {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--text);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  line-height: 1;
+  transition: transform 0.25s ease, background 0.25s ease;
+  flex-shrink: 0;
+}
+
+.program-module[open] .module-arrow {
+  transform: rotate(45deg);
+  background: var(--accent);
+}
+
+.module-body {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.module-body-grid {
+  padding: 0 1.75rem 1.75rem 5.2rem;
+}
+
+.module-body-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.module-content p {
+  margin: 0 0 1rem;
+  font-size: 0.97rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.module-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.module-list li {
+  position: relative;
+  padding-left: 1.55rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.module-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.module-result {
+  background: linear-gradient(135deg, var(--olive-deep), var(--olive));
+  color: #fff;
+  border-radius: 18px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+}
+
+.module-result span {
+  display: inline-block;
+  width: fit-content;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-bottom: 0.9rem;
+}
+
+.module-result p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* ── End Course Program ─────────────────────────────────── */
+
 [data-reveal] {
   opacity: 0;
   transform: translateY(24px);
@@ -1368,6 +1605,23 @@ p {
   .format-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .program-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .program-module summary {
+    padding: 1.25rem;
+  }
+
+  .module-body-grid {
+    padding: 0 1.25rem 1.4rem;
+  }
+
+  .module-body-grid {
+    grid-template-columns: 1fr;
+  }
+
 
   .founder-layout {
     grid-template-columns: 1fr;
@@ -1520,6 +1774,26 @@ p {
   .audience-grid,
   .format-grid {
     grid-template-columns: 1fr;
+  }
+
+  .program-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .module-number {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+  }
+
+  .program-module summary {
+    gap: 0.85rem;
+    padding: 1rem;
+  }
+
+  .module-body {
+    padding: 0 1rem 1.2rem;
   }
 
   .audience-card {

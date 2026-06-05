@@ -1,0 +1,741 @@
+<section class="ai-course-program" id="program">
+    <style>
+      .ai-course-program {
+        padding: 90px 20px;
+        background: linear-gradient(180deg, #fff8f4 0%, #fff 100%);
+        font-family: inherit;
+        color: #2f2523;
+      }
+  
+      .ai-course-program * {
+        box-sizing: border-box;
+      }
+  
+      .ai-course-program__inner {
+        max-width: 1180px;
+        margin: 0 auto;
+      }
+  
+      .ai-course-program__label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        background: #f4dfd4;
+        color: #8a5a47;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 18px;
+      }
+  
+      .ai-course-program__title {
+        font-size: clamp(34px, 5vw, 62px);
+        line-height: 1.05;
+        margin: 0 0 18px;
+        letter-spacing: -0.04em;
+        color: #2a211f;
+      }
+  
+      .ai-course-program__subtitle {
+        max-width: 760px;
+        font-size: clamp(17px, 2vw, 21px);
+        line-height: 1.55;
+        color: #6c5b56;
+        margin: 0 0 38px;
+      }
+  
+      .ai-course-program__stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 44px;
+      }
+  
+      .ai-course-program__stat {
+        background: #ffffff;
+        border: 1px solid #f0ddd4;
+        border-radius: 22px;
+        padding: 20px;
+        box-shadow: 0 16px 40px rgba(92, 56, 42, 0.06);
+      }
+  
+      .ai-course-program__stat strong {
+        display: block;
+        font-size: 28px;
+        line-height: 1;
+        color: #b77a5d;
+        margin-bottom: 8px;
+      }
+  
+      .ai-course-program__stat span {
+        font-size: 14px;
+        line-height: 1.35;
+        color: #6c5b56;
+      }
+  
+      .ai-course-program__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+  
+      .ai-course-module {
+        background: #ffffff;
+        border: 1px solid #f0ddd4;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 18px 50px rgba(92, 56, 42, 0.07);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+  
+      .ai-course-module:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 24px 60px rgba(92, 56, 42, 0.1);
+      }
+  
+      .ai-course-module summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 26px 30px;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 20px;
+        align-items: center;
+      }
+  
+      .ai-course-module summary::-webkit-details-marker {
+        display: none;
+      }
+  
+      .ai-course-module__number {
+        width: 58px;
+        height: 58px;
+        border-radius: 18px;
+        background: #f6e3da;
+        color: #a66c54;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+  
+      .ai-course-module__head h3 {
+        margin: 0 0 8px;
+        font-size: clamp(21px, 2.5vw, 30px);
+        line-height: 1.15;
+        color: #2a211f;
+        letter-spacing: -0.02em;
+      }
+  
+      .ai-course-module__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+  
+      .ai-course-module__pill {
+        display: inline-flex;
+        padding: 6px 11px;
+        border-radius: 999px;
+        background: #fff4ef;
+        color: #8a5a47;
+        font-size: 13px;
+        font-weight: 600;
+      }
+  
+      .ai-course-module__arrow {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #2f2523;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.25s ease;
+        font-size: 20px;
+      }
+  
+      .ai-course-module[open] .ai-course-module__arrow {
+        transform: rotate(45deg);
+      }
+  
+      .ai-course-module__body {
+        padding: 0 30px 30px 108px;
+      }
+  
+      .ai-course-module__body-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 24px;
+        align-items: stretch;
+      }
+  
+      .ai-course-module__content {
+        padding-top: 4px;
+      }
+  
+      .ai-course-module__content p {
+        margin: 0 0 16px;
+        font-size: 16px;
+        line-height: 1.65;
+        color: #5f504c;
+      }
+  
+      .ai-course-module__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+  
+      .ai-course-module__list li {
+        position: relative;
+        padding-left: 28px;
+        font-size: 16px;
+        line-height: 1.45;
+        color: #403634;
+      }
+  
+      .ai-course-module__list li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #b77a5d;
+        font-weight: 800;
+      }
+  
+      .ai-course-module__result {
+        background: #2f2523;
+        color: #fff;
+        border-radius: 24px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 180px;
+      }
+  
+      .ai-course-module__result span {
+        display: inline-block;
+        width: fit-content;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.12);
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 14px;
+      }
+  
+      .ai-course-module__result p {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.5;
+        color: #fff;
+      }
+  
+      .ai-course-program__final {
+        margin-top: 34px;
+        background: linear-gradient(135deg, #2f2523 0%, #7c5144 100%);
+        border-radius: 34px;
+        padding: clamp(30px, 5vw, 54px);
+        color: #fff;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 34px;
+        align-items: center;
+        box-shadow: 0 24px 70px rgba(92, 56, 42, 0.18);
+      }
+  
+      .ai-course-program__final h3 {
+        margin: 0 0 14px;
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+      }
+  
+      .ai-course-program__final p {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.55;
+        color: rgba(255,255,255,0.86);
+      }
+  
+      .ai-course-program__final-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 12px;
+      }
+  
+      .ai-course-program__final-list li {
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.1);
+        font-size: 15px;
+        line-height: 1.35;
+      }
+  
+      .ai-course-program__cta {
+        margin-top: 38px;
+        text-align: center;
+      }
+  
+      .ai-course-program__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 17px 28px;
+        border-radius: 999px;
+        background: #2f2523;
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 700;
+        transition: transform 0.25s ease, background 0.25s ease;
+      }
+  
+      .ai-course-program__button:hover {
+        transform: translateY(-2px);
+        background: #7c5144;
+      }
+  
+      .ai-course-program__note {
+        margin-top: 12px;
+        font-size: 14px;
+        color: #8a7771;
+      }
+  
+      @media (max-width: 900px) {
+        .ai-course-program {
+          padding: 64px 16px;
+        }
+  
+        .ai-course-program__stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+  
+        .ai-course-module summary {
+          grid-template-columns: auto 1fr;
+          padding: 22px;
+        }
+  
+        .ai-course-module__arrow {
+          grid-column: 1 / -1;
+          justify-self: start;
+        }
+  
+        .ai-course-module__body {
+          padding: 0 22px 24px;
+        }
+  
+        .ai-course-module__body-grid {
+          grid-template-columns: 1fr;
+        }
+  
+        .ai-course-program__final {
+          grid-template-columns: 1fr;
+        }
+      }
+  
+      @media (max-width: 520px) {
+        .ai-course-program__stats {
+          grid-template-columns: 1fr;
+        }
+  
+        .ai-course-module__number {
+          width: 48px;
+          height: 48px;
+          border-radius: 15px;
+          font-size: 16px;
+        }
+  
+        .ai-course-module summary {
+          gap: 14px;
+        }
+  
+        .ai-course-module__meta {
+          gap: 6px;
+        }
+  
+        .ai-course-module__pill {
+          font-size: 12px;
+        }
+      }
+    </style>
+  
+    <div class="ai-course-program__inner">
+      <div class="ai-course-program__label">Программа обучения</div>
+  
+      <h2 class="ai-course-program__title">
+        8 практических блоков — от первых промтов до готового контента
+      </h2>
+  
+      <p class="ai-course-program__subtitle">
+        Это не курс “посмотреть и забыть”. На каждом блоке ты сразу собираешь материалы для своего блога:
+        промты, идеи, фото, Reels, шаблоны, описания и контент-план.
+      </p>
+  
+      <div class="ai-course-program__stats">
+        <div class="ai-course-program__stat">
+          <strong>8</strong>
+          <span>учебных блоков</span>
+        </div>
+        <div class="ai-course-program__stat">
+          <strong>11+</strong>
+          <span>часов практики</span>
+        </div>
+        <div class="ai-course-program__stat">
+          <strong>30–60</strong>
+          <span>минут в день на внедрение</span>
+        </div>
+        <div class="ai-course-program__stat">
+          <strong>2 недели</strong>
+          <span>готового контента в финале</span>
+        </div>
+      </div>
+  
+      <div class="ai-course-program__grid">
+  
+        <details class="ai-course-module" open>
+          <summary>
+            <div class="ai-course-module__number">01</div>
+            <div class="ai-course-module__head">
+              <h3>Основы промтинга</h3>
+              <div class="ai-course-module__meta">
+                <span class="ai-course-module__pill">60 минут</span>
+                <span class="ai-course-module__pill">для новичков</span>
+                <span class="ai-course-module__pill">практика</span>
+              </div>
+            </div>
+            <div class="ai-course-module__arrow">+</div>
+          </summary>
+  
+          <div class="ai-course-module__body">
+            <div class="ai-course-module__body-grid">
+              <div class="ai-course-module__content">
+                <p>
+                  Разбираем, как правильно давать задания ИИ, чтобы получать не случайные ответы,
+                  а нормальные тексты, идеи и решения под свою сферу.
+                </p>
+                <ul class="ai-course-module__list">
+                  <li>Что такое промт и почему он влияет на качество ответа</li>
+                  <li>Как ИИ понимает инструкции</li>
+                  <li>Структура сильного промта: роль, контекст, задача, формат</li>
+                  <li>Практика: пишем 5 промтов для своей сферы</li>
+                </ul>
+              </div>
+              <div class="ai-course-module__result">
+                <div>
+                  <span>Результат блока</span>
+                  <p>Ты пишешь чёткие инструкции и получаешь качественные ответы с первой попытки.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+  
+        <details class="ai-course-module">
+          <summary>
+            <div class="ai-course-module__number">02</div>
+            <div class="ai-course-module__head">
+              <h3>ChatGPT, Claude и Gemini</h3>
+              <div class="ai-course-module__meta">
+                <span class="ai-course-module__pill">80 минут</span>
+                <span class="ai-course-module__pill">инструменты</span>
+                <span class="ai-course-module__pill">система работы</span>
+              </div>
+            </div>
+            <div class="ai-course-module__arrow">+</div>
+          </summary>
+  
+          <div class="ai-course-module__body">
+            <div class="ai-course-module__body-grid">
+              <div class="ai-course-module__content">
+                <p>
+                  Показываем, какой ИИ для чего использовать и как превратить его в помощника
+                  для ежедневной работы с контентом.
+                </p>
+                <ul class="ai-course-module__list">
+                  <li>ChatGPT vs Claude vs Gemini: что выбрать под задачу</li>
+                  <li>Как загружать свои тексты, брифы и примеры</li>
+                  <li>Как настроить память и Custom Instructions</li>
+                  <li>Практика: система работы с ИИ за 30 минут в день</li>
+                </ul>
+              </div>
+              <div class="ai-course-module__result">
+                <div>
+                  <span>Результат блока</span>
+                  <p>Ты работаешь с ИИ как с помощником, а не как с игрушкой. Контент становится быстрее и понятнее.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+  
+        <details class="ai-course-module">
+          <summary>
+            <div class="ai-course-module__number">03</div>
+            <div class="ai-course-module__head">
+              <h3>Генерация и обработка фотографий</h3>
+              <div class="ai-course-module__meta">
+                <span class="ai-course-module__pill">90 минут</span>
+                <span class="ai-course-module__pill">визуал</span>
+                <span class="ai-course-module__pill">фото для блога</span>
+              </div>
+            </div>
+            <div class="ai-course-module__arrow">+</div>
+          </summary>
+  
+          <div class="ai-course-module__body">
+            <div class="ai-course-module__body-grid">
+              <div class="ai-course-module__content">
+                <p>
+                  Учимся создавать и улучшать визуальный контент для блога без сложных программ
+                  и постоянной зависимости от фотосессий.
+                </p>
+                <ul class="ai-course-module__list">
+                  <li>Как писать промты для изображений</li>
+                  <li>Стиль, композиция и визуальная подача</li>
+                  <li>Upscale и улучшение качества</li>
+                  <li>Убрать фон, изменить цвет, добавить эффекты</li>
+                  <li>Практика: создаём 7 постов с новыми фото</li>
+                </ul>
+              </div>
+              <div class="ai-course-module__result">
+                <div>
+                  <span>Результат блока</span>
+                  <p>У тебя появляются готовые фото и визуалы для контента, которые можно использовать в публикациях.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+  
+        <details class="ai-course-module">
+          <summary>
+            <div class="ai-course-module__number">04</div>
+            <div class="ai-course-module__head">
+              <h3>Контент-план, сюжеты и описания</h3>
+              <div class="ai-course-module__meta">
+                <span class="ai-course-module__pill">75 минут</span>
+                <span class="ai-course-module__pill">идеи</span>
+                <span class="ai-course-module__pill">тексты</span>
+              </div>
+            </div>
+            <div class="ai-course-module__arrow">+</div>
+          </summary>
+  
+          <div class="ai-course-module__body">
+            <div class="ai-course-module__body-grid">
+              <div class="ai-course-module__content">
+                <p>
+                  Собираем систему контента, чтобы не сидеть каждый день с вопросом:
+                  “Что сегодня выложить?”
+                </p>
+                <ul class="ai-course-module__list">
+                  <li>Как просить контент-план у Claude</li>
+                  <li>Идеи для Reels, Stories и постов</li>
+                  <li>Хэштеги, emoji и call-to-action</li>
+                  <li>Описания услуг и офферы</li>
+                  <li>Практика: контент-план на месяц</li>
+                </ul>
+              </div>
+              <div class="ai-course-module__result">
+                <div>
+                  <span>Результат блока</span>
+                  <p>У тебя есть идеи, описания, хэштеги и структура публикаций на месяц.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+  
+        <details class="ai-course-module">
+          <summary>
+            <div class="ai-course-module__number">05</div>
+            <div class="ai-course-module__head">
+              <h3>Создание контента с Krea AI</h3>
+              <div class="ai-course-module__meta">
+                <span class="ai-course-module__pill">70 минут</span>
+                <span class="ai-course-module__pill">Reels</span>
+                <span class="ai-course-module__pill">AI-видео</span>
+              </div>
+            </div>
+            <div class="ai-course-module__arrow">+</div>
+          </summary>
+  
+          <div class="ai-course-module__body">
+            <div class="ai-course-module__body-grid">
+              <div class="ai-course-module__content">
+                <p>
+                  Показываем, как создавать видео через текстовые описания и ускорить производство Reels.
+                </p>
+                <ul class="ai-course-module__list">
+                  <li>Что такое Krea AI и когда это реально помогает</li>
+                  <li>Создание Reels через текст</li>
+                  <li>Примеры для beauty-индустрии</li>
+                  <li>Видео для мастера, салона и личного бренда</li>
+                  <li>Практика: создаём 3 Reels с нуля</li>
+                </ul>
+              </div>
+              <div class="ai-course-module__result">
+                <div>
+                  <span>Результат блока</span>
+                  <p>Ты можешь делать видео-контент быстрее, даже если раньше не работала с монтажом и AI-видео.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+  
+        <details class="ai-course-module">
+          <summary>
+            <div class="ai-course-module__number">06</div>
+            <div class="ai-course-module__head">
+              <h3>Дизайн и оформление в Canva</h3>
+              <div class="ai-course-module__meta">
+                <span class="ai-course-module__pill">95 минут</span>
+                <span class="ai-course-module__pill">дизайн</span>
+                <span class="ai-course-module__pill">шаблоны</span>
+              </div>
+            </div>
+            <div class="ai-course-module__arrow">+</div>
+          </summary>
+  
+          <div class="ai-course-module__body">
+            <div class="ai-course-module__body-grid">
+              <div class="ai-course-module__content">
+                <p>
+                  Собираем визуальный стиль, чтобы блог выглядел аккуратно, дорого и профессионально.
+                </p>
+                <ul class="ai-course-module__list">
+                  <li>Цвет, типографика и композиция</li>
+                  <li>Почему оформление влияет на доверие</li>
+                  <li>Как адаптировать готовые шаблоны под себя</li>
+                  <li>Фильтры, эффекты, фоны и обработка фото</li>
+                  <li>Практика: создаём 10 шаблонов для контента</li>
+                </ul>
+              </div>
+              <div class="ai-course-module__result">
+                <div>
+                  <span>Результат блока</span>
+                  <p>У тебя есть единый визуальный стиль и набор шаблонов для Stories, постов, Reels и анонсов.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+  
+        <details class="ai-course-module">
+          <summary>
+            <div class="ai-course-module__number">07</div>
+            <div class="ai-course-module__head">
+              <h3>Монтаж в CapCut</h3>
+              <div class="ai-course-module__meta">
+                <span class="ai-course-module__pill">80 минут</span>
+                <span class="ai-course-module__pill">монтаж</span>
+                <span class="ai-course-module__pill">Instagram Reels</span>
+              </div>
+            </div>
+            <div class="ai-course-module__arrow">+</div>
+          </summary>
+  
+          <div class="ai-course-module__body">
+            <div class="ai-course-module__body-grid">
+              <div class="ai-course-module__content">
+                <p>
+                  Учимся монтировать Reels самостоятельно: без сложных программ и технического стресса.
+                </p>
+                <ul class="ai-course-module__list">
+                  <li>Интерфейс CapCut и базовые настройки</li>
+                  <li>Нарезка, переходы, эффекты и динамика</li>
+                  <li>Текст, emoji и синхронизация с музыкой</li>
+                  <li>Где брать музыку и как снизить риск блокировок</li>
+                  <li>Практика: монтируем 2 полноценных Reels</li>
+                </ul>
+              </div>
+              <div class="ai-course-module__result">
+                <div>
+                  <span>Результат блока</span>
+                  <p>Ты можешь самостоятельно собрать Reels из сырого видео до готовой публикации.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+  
+        <details class="ai-course-module">
+          <summary>
+            <div class="ai-course-module__number">08</div>
+            <div class="ai-course-module__head">
+              <h3>Финальный практикум: контент на 2 недели</h3>
+              <div class="ai-course-module__meta">
+                <span class="ai-course-module__pill">120 минут LIVE</span>
+                <span class="ai-course-module__pill">живой созвон</span>
+                <span class="ai-course-module__pill">финальный результат</span>
+              </div>
+            </div>
+            <div class="ai-course-module__arrow">+</div>
+          </summary>
+  
+          <div class="ai-course-module__body">
+            <div class="ai-course-module__body-grid">
+              <div class="ai-course-module__content">
+                <p>
+                  Живой созвон, где соединяем всё в одну систему: ИИ, фото, Reels, Canva, CapCut,
+                  тексты и публикации.
+                </p>
+                <ul class="ai-course-module__list">
+                  <li>Собираем контент-план на 2 недели</li>
+                  <li>Готовим идеи, описания и визуалы</li>
+                  <li>Проверяем, что можно публиковать уже на следующий день</li>
+                  <li>Отвечаем на вопросы участниц</li>
+                </ul>
+              </div>
+              <div class="ai-course-module__result">
+                <div>
+                  <span>Результат блока</span>
+                  <p>Ты выходишь не просто с теорией, а с готовым набором контента и понятным планом действий.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+  
+      </div>
+  
+      <div class="ai-course-program__final">
+        <div>
+          <h3>Что будет у тебя после курса</h3>
+          <p>
+            Не просто знания про ИИ, а готовая система для блога:
+            что писать, что снимать, как оформлять и как быстрее публиковать контент.
+          </p>
+        </div>
+  
+        <ul class="ai-course-program__final-list">
+          <li>Готовые промты под свою нишу</li>
+          <li>Контент-план на месяц</li>
+          <li>Шаблоны Canva в едином стиле</li>
+          <li>Идеи, описания и Reels для публикаций</li>
+          <li>План контента на ближайшие 2 недели</li>
+        </ul>
+      </div>
+  
+      <div class="ai-course-program__cta">
+        <a class="ai-course-program__button" href="#form">
+          Хочу пройти обучение
+        </a>
+        <div class="ai-course-program__note">
+          После заявки мы свяжемся с тобой и подскажем следующий шаг.
+        </div>
+      </div>
+    </div>
+  </section>

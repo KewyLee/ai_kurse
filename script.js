@@ -741,6 +741,38 @@ successModal.addEventListener("click", (event) => {
   }
 });
 
+document.querySelectorAll(".program-module").forEach((module) => {
+  const body = module.querySelector(".module-body");
+  let animating = false;
+
+  module.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (animating) return;
+
+    if (module.hasAttribute("open")) {
+      animating = true;
+      body.style.maxHeight = body.scrollHeight + "px";
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        body.style.maxHeight = "0";
+      }));
+      body.addEventListener("transitionend", () => {
+        module.removeAttribute("open");
+        animating = false;
+      }, { once: true });
+    } else {
+      animating = true;
+      module.setAttribute("open", "");
+      body.style.maxHeight = "0";
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        body.style.maxHeight = body.scrollHeight + "px";
+        body.addEventListener("transitionend", () => {
+          animating = false;
+        }, { once: true });
+      }));
+    }
+  });
+});
+
 const revealNodes = document.querySelectorAll("[data-reveal]");
 const revealObserver = new IntersectionObserver(
   (entries, observer) => {
