@@ -245,12 +245,12 @@ function hideWelcome() {
   }
 
   welcomeOverlay.classList.add("is-hiding");
-  document.body.classList.remove("welcome-active");
   localStorage.setItem(WELCOME_STORAGE_KEY, getTodayKey());
 
   window.setTimeout(() => {
     welcomeOverlay.classList.remove("is-visible", "is-hiding");
     welcomeOverlay.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("welcome-active");
   }, 1150);
 }
 
