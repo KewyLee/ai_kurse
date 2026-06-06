@@ -10,6 +10,7 @@ const closeSuccessBtn = document.getElementById("close-success");
 const telegramLink = document.getElementById("telegram-link");
 const footerTelegramLink = document.getElementById("footer-telegram-link");
 const welcomeOverlay = document.getElementById("welcome-overlay");
+const welcomeSkip = document.getElementById("welcome-skip");
 const WELCOME_STORAGE_KEY = "ai-blog-welcome-date";
 const phoneGroup = document.getElementById("phone-group");
 const phoneInput = document.getElementById("phone");
@@ -239,14 +240,19 @@ function getTodayKey() {
   return new Date().toISOString().slice(0, 10);
 }
 
-function blockScroll(e) {
-  e.preventDefault();
-}
+let welcomeTimer = null;
+let welcomeClosing = false;
 
 function unlockScroll() {
-  document.removeEventListener("wheel", blockScroll);
-  document.removeEventListener("touchmove", blockScroll);
   document.body.classList.remove("welcome-active");
+}
+
+function removeWelcomeListeners() {
+  document.removeEventListener("wheel", dismissWelcomeFromInput);
+  document.removeEventListener("touchstart", dismissWelcomeFromInput);
+  window.removeEventListener("keydown", dismissWelcomeFromInput);
+  welcomeOverlay?.removeEventListener("click", dismissWelcomeFromInput);
+  welcomeSkip?.removeEventListener("click", dismissWelcomeFromInput);
 }
 
 function hideWelcome() {
@@ -254,14 +260,32 @@ function hideWelcome() {
     return;
   }
 
+  if (welcomeClosing) {
+    return;
+  }
+
+  welcomeClosing = true;
+  if (welcomeTimer) {
+    window.clearTimeout(welcomeTimer);
+    welcomeTimer = null;
+  }
+  removeWelcomeListeners();
+  unlockScroll();
   welcomeOverlay.classList.add("is-hiding");
   localStorage.setItem(WELCOME_STORAGE_KEY, getTodayKey());
 
   window.setTimeout(() => {
     welcomeOverlay.classList.remove("is-visible", "is-hiding");
     welcomeOverlay.setAttribute("aria-hidden", "true");
-    unlockScroll();
+    welcomeClosing = false;
   }, 1150);
+}
+
+function dismissWelcomeFromInput(event) {
+  if (event?.target === welcomeSkip) {
+    event.preventDefault();
+  }
+  hideWelcome();
 }
 
 function showWelcomeOncePerDay() {
@@ -274,16 +298,17 @@ function showWelcomeOncePerDay() {
   }
 
   window.scrollTo({ top: 0, behavior: "instant" });
-  document.addEventListener("wheel", blockScroll, { passive: false });
-  document.addEventListener("touchmove", blockScroll, { passive: false });
 
   document.body.classList.add("welcome-active");
   welcomeOverlay.setAttribute("aria-hidden", "false");
   welcomeOverlay.classList.add("is-visible");
 
-  window.setTimeout(hideWelcome, 2600);
-  window.addEventListener("keydown", hideWelcome, { once: true });
-  welcomeOverlay.addEventListener("click", hideWelcome, { once: true });
+  welcomeTimer = window.setTimeout(hideWelcome, 2600);
+  document.addEventListener("wheel", dismissWelcomeFromInput, { passive: true });
+  document.addEventListener("touchstart", dismissWelcomeFromInput, { passive: true });
+  window.addEventListener("keydown", dismissWelcomeFromInput);
+  welcomeOverlay.addEventListener("click", dismissWelcomeFromInput);
+  welcomeSkip?.addEventListener("click", dismissWelcomeFromInput);
 }
 
 showWelcomeOncePerDay();
