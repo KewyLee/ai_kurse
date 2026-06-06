@@ -10,7 +10,6 @@ const closeSuccessBtn = document.getElementById("close-success");
 const telegramLink = document.getElementById("telegram-link");
 const footerTelegramLink = document.getElementById("footer-telegram-link");
 const welcomeOverlay = document.getElementById("welcome-overlay");
-const welcomeSkip = document.getElementById("welcome-skip");
 const WELCOME_STORAGE_KEY = "ai-blog-welcome-date";
 const phoneGroup = document.getElementById("phone-group");
 const phoneInput = document.getElementById("phone");
@@ -252,7 +251,6 @@ function removeWelcomeListeners() {
   document.removeEventListener("touchstart", dismissWelcomeFromInput);
   window.removeEventListener("keydown", dismissWelcomeFromInput);
   welcomeOverlay?.removeEventListener("click", dismissWelcomeFromInput);
-  welcomeSkip?.removeEventListener("click", dismissWelcomeFromInput);
 }
 
 function hideWelcome() {
@@ -281,10 +279,7 @@ function hideWelcome() {
   }, 1150);
 }
 
-function dismissWelcomeFromInput(event) {
-  if (event?.target === welcomeSkip) {
-    event.preventDefault();
-  }
+function dismissWelcomeFromInput() {
   hideWelcome();
 }
 
@@ -308,7 +303,6 @@ function showWelcomeOncePerDay() {
   document.addEventListener("touchstart", dismissWelcomeFromInput, { passive: true });
   window.addEventListener("keydown", dismissWelcomeFromInput);
   welcomeOverlay.addEventListener("click", dismissWelcomeFromInput);
-  welcomeSkip?.addEventListener("click", dismissWelcomeFromInput);
 }
 
 showWelcomeOncePerDay();

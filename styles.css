@@ -110,32 +110,6 @@ body.welcome-active {
   text-wrap: balance;
 }
 
-.welcome-skip {
-  position: absolute;
-  top: clamp(1rem, 3vw, 2rem);
-  right: clamp(1rem, 3vw, 2rem);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 0.55rem 1rem;
-  border: 1px solid rgba(63, 82, 53, 0.18);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
-  color: var(--olive-deep);
-  font-weight: 800;
-  cursor: pointer;
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 12px 28px rgba(37, 51, 31, 0.12);
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.welcome-skip:hover {
-  transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.9);
-}
-
 .welcome-arrow {
   position: absolute;
   left: 50%;
