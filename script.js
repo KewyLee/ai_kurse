@@ -753,44 +753,26 @@ successModal.addEventListener("click", (event) => {
   }
 });
 
-document.querySelectorAll(".program-module").forEach((module) => {
-  const body = module.querySelector(".module-body");
-  let animating = false;
-
-  module.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (animating) return;
-
-    if (module.hasAttribute("open")) {
-      animating = true;
-      body.style.maxHeight = body.scrollHeight + "px";
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        body.style.maxHeight = "0";
-      }));
-      body.addEventListener("transitionend", () => {
-        module.removeAttribute("open");
-        animating = false;
-      }, { once: true });
-    } else {
-      animating = true;
-      module.setAttribute("open", "");
-      body.style.maxHeight = "0";
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        body.style.maxHeight = body.scrollHeight + "px";
-        body.addEventListener("transitionend", () => {
-          animating = false;
-        }, { once: true });
-      }));
-    }
-  });
-});
-
 const revealNodes = document.querySelectorAll("[data-reveal]");
+const pricingSection = document.querySelector("#pricing");
+const pricingCards = document.querySelectorAll("#pricing .pricing-card");
+const lastPricingCard = pricingCards[pricingCards.length - 1];
+const pricingAfterword = document.querySelector(".pricing-afterword");
+let pricingSequenceStarted = false;
 const revealObserver = new IntersectionObserver(
   (entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
+        if (entry.target === lastPricingCard && !pricingSequenceStarted) {
+          pricingSequenceStarted = true;
+          window.setTimeout(() => {
+            pricingSection?.classList.add("pricing-bg-visible");
+          }, 280);
+          window.setTimeout(() => {
+            pricingAfterword?.classList.add("is-visible");
+          }, 980);
+        }
         observer.unobserve(entry.target);
       }
     });
