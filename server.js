@@ -195,7 +195,7 @@ function validateLeadPayload(payload) {
     return "Lead payload is required.";
   }
 
-  const requiredFields = ["name", "role", "telegram", "phone", "phoneCountry"];
+  const requiredFields = ["name", "telegram", "phone"];
 
   for (const fieldName of requiredFields) {
     if (!String(payload[fieldName] || "").trim()) {
@@ -229,9 +229,8 @@ function buildTelegramMessage(payload) {
     "<b>Новая заявка с лендинга</b>",
     "",
     `<b>Имя:</b> ${escapeTelegramText(payload.name)}`,
-    `<b>Кто:</b> ${escapeTelegramText(payload.role)}`,
     `<b>Telegram:</b> ${escapeTelegramText(payload.telegram)}`,
-    `<b>Телефон:</b> ${escapeTelegramText(payload.phone)} (${escapeTelegramText(payload.phoneCountry)})`,
+    `<b>Телефон:</b> ${escapeTelegramText(payload.phone)}`,
     `<b>Источник:</b> ${escapeTelegramText(payload.source || "landing-ai-blog")}`,
   ].join("\n");
 }

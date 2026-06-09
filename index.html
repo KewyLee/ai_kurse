@@ -31,7 +31,7 @@
       rel="stylesheet"
     />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260606124254" />
+    <link rel="stylesheet" href="styles.css?v=20260609143633" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -538,21 +538,12 @@
           <div class="cta-copy">
             <h2>Один шаг, чтобы начать</h2>
             <p>
-              Заполни форму, и мы передадим заявку в Telegram-группу, а затем пришлём тебе стартовые шаги в личку.
+              Заполни форму — и мы напишем тебе в Telegram.
             </p>
           </div>
           <form id="lead-form" class="lead-form" novalidate>
             <label for="name">Имя</label>
             <input id="name" name="name" type="text" class="ym-disable-keys" required />
-
-            <label for="role">Кто вы</label>
-            <select id="role" name="role" class="ym-disable-keys" required>
-              <option value="">Выбери роль</option>
-              <option value="Мастер на себя">Мастер на себя</option>
-              <option value="Владелец салона">Владелец салона</option>
-              <option value="Модель / личный бренд">Модель / личный бренд</option>
-              <option value="Другое">Другое</option>
-            </select>
 
             <div class="label-with-help">
               <label for="telegram">Ник в Telegram</label>
@@ -576,60 +567,21 @@
             />
 
             <label for="phone">Телефон</label>
-            <div class="phone-group" id="phone-group">
-              <input
-                type="hidden"
-                id="phone-country"
-                name="phoneCountry"
-                class="ym-disable-keys"
-                value=""
-              />
-              <button
-                type="button"
-                class="country-toggle"
-                id="country-toggle"
-                aria-haspopup="listbox"
-                aria-expanded="false"
-                aria-controls="country-dropdown"
-              >
-                <span id="country-toggle-label">Код</span>
-                <span class="country-toggle-arrow" aria-hidden="true"></span>
-              </button>
-              <div class="country-dropdown" id="country-dropdown" hidden>
-                <label class="sr-only" for="country-search">Поиск страны</label>
-                <input
-                  id="country-search"
-                  type="search"
-                  class="ym-disable-keys"
-                  placeholder="Поиск страны или кода"
-                  autocomplete="off"
-                />
-                <ul
-                  id="country-options"
-                  class="country-options"
-                  role="listbox"
-                  aria-label="Список стран"
-                ></ul>
-                <p id="country-empty" class="country-empty" hidden>
-                  Страна не найдена
-                </p>
-              </div>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                class="ym-disable-keys"
-                placeholder="Номер без кода страны"
-                inputmode="tel"
-                autocomplete="tel-national"
-                required
-              />
-            </div>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              class="ym-disable-keys"
+              placeholder="+380991234567"
+              inputmode="tel"
+              autocomplete="tel"
+              required
+            />
             <p class="phone-hint">
-              Код страны определяется автоматически, при необходимости его можно изменить вручную.
+              Укажи номер с кодом страны, например: +380991234567
             </p>
 
-            <button type="submit" class="btn btn-primary">Отправить заявку</button>
+            <button type="submit" class="btn btn-primary">Написать нам в Telegram</button>
             <p class="form-note">
               Нажимая кнопку, ты соглашаешься на обработку данных для связи.
             </p>
@@ -643,14 +595,12 @@
       <div class="success-card">
         <h2>Заявка отправлена</h2>
         <p>
-          Мы уже передали заявку в Telegram-группу.
-          Чтобы мы ответили быстрее, напиши в Telegram:
-          <strong>«Привет, я [Имя], хочу узнать про обучение»</strong>
+          Мы уже получили её и скоро свяжемся с тобой. Нажми кнопку ниже — текст уже будет написан за тебя.
         </p>
         <a
           id="telegram-link"
           class="btn btn-primary"
-          href="https://t.me/your_username"
+          href="#"
           target="_blank"
           rel="noopener noreferrer"
           >Открыть Telegram</a
@@ -668,6 +618,7 @@
           <p>Здесь можно не знать. Здесь можно спрашивать</p>
           <p>Здесь ты разберёшься</p>
         </div>
+        <!-- СОЦИАЛЬНЫЕ СЕТИ — временно скрыты
         <div class="footer-socials" aria-label="Социальные сети Softy Learn">
           <p class="footer-socials-title">Мы в соцсетях</p>
           <div class="footer-socials-list">
@@ -713,7 +664,7 @@
             <a
               id="footer-telegram-link"
               class="footer-social-link footer-social-link--telegram"
-              href="https://t.me/your_username"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Telegram Softy Learn"
@@ -725,9 +676,10 @@
             </a>
           </div>
         </div>
+        -->
       </div>
     </footer>
 
-    <script src="script.js?v=20260606124254"></script>
+    <script src="script.js?v=20260609143633"></script>
   </body>
 </html>
