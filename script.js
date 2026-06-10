@@ -12,6 +12,7 @@ const footerTelegramLink = document.getElementById("footer-telegram-link");
 const welcomeOverlay = document.getElementById("welcome-overlay");
 const WELCOME_STORAGE_KEY = "ai-blog-welcome-date";
 const phoneInput = document.getElementById("phone");
+const REFERRAL_STORAGE_KEY = "ai-blog-referral";
 const YM_COUNTER_ID = 109420811;
 const CTA_GOAL_SELECTOR = '[data-ym-goal="cta_click"], a[href="#cta"]';
 let hasTrackedFormStart = false;
@@ -25,6 +26,23 @@ function sendYmGoal(goalName) {
     typeof window.ym === "function"
   ) {
     window.ym(YM_COUNTER_ID, "reachGoal", goalName);
+  }
+}
+
+function getReferralCode() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = String(params.get("ref") || "").trim();
+    const cleaned = fromUrl.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 50);
+
+    if (cleaned) {
+      window.sessionStorage.setItem(REFERRAL_STORAGE_KEY, cleaned);
+      return cleaned;
+    }
+
+    return window.sessionStorage.getItem(REFERRAL_STORAGE_KEY) || "";
+  } catch (_error) {
+    return "";
   }
 }
 
@@ -360,6 +378,7 @@ form.addEventListener("submit", async (event) => {
     telegram,
     phone: phoneValidation.phone,
     source: "landing-ai-blog",
+    referral: getReferralCode() || null,
     createdAt: new Date().toISOString(),
   };
 
