@@ -284,6 +284,7 @@ function sendTelegramLeadMessage(payload) {
       `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
       {
         method: "POST",
+        family: 4,
         headers: {
           "Content-Type": "application/json",
           "Content-Length": Buffer.byteLength(body),
@@ -381,7 +382,7 @@ function httpsJsonRequest(url, method, body, headers) {
   if (body) finalHeaders["Content-Length"] = Buffer.byteLength(body);
 
   return new Promise((resolve, reject) => {
-    const req = https.request(url, { method, headers: finalHeaders }, (res) => {
+    const req = https.request(url, { method, family: 4, headers: finalHeaders }, (res) => {
       let raw = "";
       res.on("data", (c) => { raw += c; });
       res.on("end", () => {
